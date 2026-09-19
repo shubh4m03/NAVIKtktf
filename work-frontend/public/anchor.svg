@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Deep navy background -->
+  <rect width="32" height="32" rx="6" fill="#1E3A5F"/>
+  <!-- Anchor icon in white -->
+  <circle cx="16" cy="11" r="3" stroke="white" stroke-width="2" fill="none"/>
+  <line x1="16" y1="14" x2="16" y2="24" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 18 C10 24 22 24 22 18" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="10" y1="11" x2="22" y2="11" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>

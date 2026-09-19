@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: charter-intelligence
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/charter_db}
+    username: ${SPRING_DATASOURCE_USERNAME:charter_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:charter_pass}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,475 @@
+/* NAVIK Hero Experience Styles */
+.navik-hero-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Canvas Container */
+.navik-hero-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #000000;
+}
+
+/* Cinematic Space Vignette Overlay */
+.navik-hero-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.65) 100%);
+}
+
+/* ------------------------------------------------------------- */
+/* BRAND REVEAL LAYER (Full Viewport Overlay)                    */
+/* ------------------------------------------------------------- */
+.navik-brand-reveal-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Skip Control (Top-Right) */
+.navik-skip-btn {
+  position: absolute;
+  top: 1.8rem;
+  right: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  color: #94a3b8;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(8px);
+  z-index: 20;
+  transition: all 0.25s ease;
+}
+
+.navik-skip-btn:hover {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.navik-skip-arrow {
+  transition: transform 0.25s ease;
+}
+
+.navik-skip-btn:hover .navik-skip-arrow {
+  transform: translateX(3px);
+}
+
+/* ------------------------------------------------------------- */
+/* LEFT-SIDE MISSION STATEMENT PANEL                            */
+/* ------------------------------------------------------------- */
+.navik-mission-statement {
+  position: absolute;
+  top: clamp(1.8rem, 4.2vh, 3.0rem);
+  left: clamp(2rem, 5vw, 4.5rem);
+  max-width: 340px;
+  padding: 0.85rem 1.15rem;
+  background: rgba(10, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+  z-index: 8;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navik-mission-statement.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navik-section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.navik-tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  display: inline-block;
+}
+
+.navik-mission-desc {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: 0.80rem;
+  line-height: 1.52;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------- */
+/* MAIN BRAND CENTER STACK (Overlapping Middle Earth)           */
+/* ------------------------------------------------------------- */
+.navik-brand-center-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 1.5rem;
+  pointer-events: auto;
+  z-index: 6;
+  margin-top: -2.5rem;
+}
+
+/* Dominant NAVIK Wordmark (Foreground Title across Earth) */
+.navik-wordmark {
+  font-family: var(--font-brand, 'Syne', 'Space Grotesk', sans-serif);
+  font-size: clamp(3.6rem, 9.5vw, 8.4rem);
+  font-weight: 800;
+  letter-spacing: clamp(0.16em, 2.0vw, 0.26em);
+  padding-left: clamp(0.16em, 2.0vw, 0.26em);
+  /* optical centering for letter-spacing */
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 0.95;
+  opacity: 0;
+  transform: translateY(18px) scale(0.97);
+  transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 4px 35px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 0, 0, 0.85), 0 0 65px rgba(56, 189, 248, 0.14);
+}
+
+.navik-wordmark.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1.0);
+}
+
+/* Tagline directly beneath NAVIK */
+.navik-tagline-text {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(0.92rem, 1.6vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: clamp(0.16em, 0.25vw, 0.24em);
+  color: #cbd5e1;
+  margin-top: clamp(0.6rem, 1.4vh, 1.1rem);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.0s cubic-bezier(0.16, 1, 0.3, 1), transform 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+}
+
+.navik-tagline-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CTA Container */
+.navik-cta-container {
+  margin-top: clamp(1.1rem, 2.2vh, 1.6rem);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navik-cta-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Minimal, Cinematic "GET STARTED ↓" CTA */
+.navik-cinematic-cta-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.2rem;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(0.78rem, 1.1vw, 0.86rem);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  padding-left: calc(1.2rem + 0.28em); /* optical centering for letter-spacing */
+  cursor: pointer;
+  outline: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.navik-cinematic-cta-text {
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.navik-cinematic-cta-arrow {
+  color: #64748b;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease;
+  animation: navik-subtle-arrow-bob 2.2s infinite ease-in-out;
+}
+
+@keyframes navik-subtle-arrow-bob {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+
+.navik-cinematic-cta-btn:hover {
+  color: #ffffff;
+}
+
+.navik-cinematic-cta-btn:hover .navik-cinematic-cta-text {
+  color: #ffffff;
+  letter-spacing: 0.32em;
+}
+
+.navik-cinematic-cta-btn:hover .navik-cinematic-cta-arrow {
+  color: #38bdf8;
+  transform: translateY(5px);
+}
+
+.navik-cinematic-cta-btn:active {
+  transform: translateY(1px);
+}
+
+/* ------------------------------------------------------------- */
+/* CINEMATIC TRANSITION OUT (Hero -> Main Application Handoff)  */
+/* ------------------------------------------------------------- */
+.navik-hero-wrapper.transitioning-out {
+  pointer-events: none;
+  transition: opacity 1.3s cubic-bezier(0.4, 0, 0.2, 1), transform 1.3s cubic-bezier(0.4, 0, 0.2, 1), filter 1.3s ease;
+  opacity: 0;
+  transform: scale(1.03);
+  filter: brightness(0.1);
+}
+
+/* ------------------------------------------------------------- */
+/* 4 COMPACT CAPABILITY CARDS ROW                                */
+/* ------------------------------------------------------------- */
+.navik-capabilities-row {
+  position: absolute;
+  bottom: clamp(1.5rem, 3.4vh, 2.4rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: calc(100% - clamp(2rem, 5.5vw, 5.5rem));
+  max-width: 1360px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.85rem;
+  pointer-events: auto;
+  z-index: 7;
+  opacity: 0;
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.navik-capabilities-row.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.navik-cap-card {
+  background: rgba(10, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.80rem 1.0rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+
+.navik-cap-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 16px rgba(56, 189, 248, 0.06);
+}
+
+.navik-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.15rem;
+}
+
+.navik-card-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: 0.08em;
+}
+
+.navik-card-icon {
+  color: #94a3b8;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navik-cap-card:hover .navik-card-icon {
+  color: #38bdf8;
+  transform: scale(1.08);
+}
+
+.navik-card-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(0.70rem, 0.80vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #f1f5f9;
+  text-transform: uppercase;
+}
+
+.navik-card-desc {
+  font-family: var(--font-display, 'Outfit', sans-serif);
+  font-size: clamp(0.70rem, 0.76vw, 0.75rem);
+  line-height: 1.42;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Dev Controls (Bottom-Left) */
+.navik-dev-corner {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: auto;
+  opacity: 0.45;
+  z-index: 20;
+  transition: opacity 0.2s ease;
+}
+
+.navik-dev-corner:hover {
+  opacity: 0.95;
+}
+
+.navik-dev-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: #64748b;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.68rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navik-dev-btn:hover {
+  background: rgba(30, 41, 59, 0.8);
+  color: #94a3b8;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .navik-mission-statement {
+    top: 1.2rem;
+    left: 1.2rem;
+    max-width: 280px;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .navik-capabilities-row {
+    grid-template-columns: repeat(2, 1fr);
+    bottom: 1.2rem;
+    gap: 0.65rem;
+  }
+
+  .navik-brand-center-stack {
+    margin-top: -1.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .navik-skip-btn {
+    top: 1.0rem;
+    right: 1.0rem;
+  }
+
+  .navik-mission-statement {
+    display: none;
+  }
+
+  .navik-wordmark {
+    font-size: clamp(2.8rem, 12vw, 4.4rem);
+    letter-spacing: 0.16em;
+    padding-left: 0.16em;
+  }
+
+  .navik-tagline-text {
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+  }
+
+  .navik-cinematic-cta-btn {
+    padding: 0.45rem 1.0rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+  }
+
+  .navik-capabilities-row {
+    grid-template-columns: 1fr;
+    max-height: 150px;
+    overflow-y: auto;
+    bottom: 0.8rem;
+    gap: 0.45rem;
+  }
+
+  .navik-dev-corner {
+    display: none;
+  }
+}

@@ -1,0 +1,5 @@
+id,name,dwt_min,dwt_max,typical_draft_m,typical_loa_m,typical_beam_m
+1,Handysize,10000.0,40000.0,10.0,170.0,27.0
+2,Supramax,40000.0,65000.0,12.0,195.0,32.2
+3,Panamax,65000.0,100000.0,14.0,228.0,32.3
+4,Capesize,100000.0,200000.0,18.0,295.0,45.0

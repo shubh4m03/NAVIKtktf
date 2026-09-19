@@ -1,0 +1,48 @@
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Logs
+*.log
+logs/
+
+# Frontend (Node / Next.js)
+node_modules/
+frontend/node_modules/
+.next/
+frontend/.next/
+out/
+build/
+dist/
+.turbo/
+
+# Backend (Java / Maven)
+target/
+backend/target/
+*.class
+*.jar
+
+# Python / ML Service
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+venv/
+.venv/
+env/
+
+# IDE & Editors
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Environment & Secrets
+.env
+.env.local

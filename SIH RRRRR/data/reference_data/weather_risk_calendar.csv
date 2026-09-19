@@ -1,0 +1,13 @@
+id,region,month,risk_level,note
+1,Bay of Bengal,1,LOW,Winter calm conditions
+2,Bay of Bengal,2,LOW,Winter calm conditions
+3,Bay of Bengal,3,LOW,Fair weather transition
+4,Bay of Bengal,4,HIGH,Pre-monsoon cyclone season
+5,Bay of Bengal,5,HIGH,Pre-monsoon peak cyclone season
+6,Bay of Bengal,6,MEDIUM,"Southwest monsoon onset, rough seas"
+7,Bay of Bengal,7,MEDIUM,"Active monsoon, swell and rain"
+8,Bay of Bengal,8,MEDIUM,Active monsoon
+9,Bay of Bengal,9,MEDIUM,Monsoon withdrawal phase
+10,Bay of Bengal,10,HIGH,Post-monsoon cyclone season
+11,Bay of Bengal,11,HIGH,Post-monsoon peak cyclone season
+12,Bay of Bengal,12,LOW,Transition to calm winter

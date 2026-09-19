@@ -1,0 +1,77 @@
+# Operating System & Archives
+__MACOSX/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+**/*.log
+logs/
+build_output.txt
+
+# Dependencies & Package Managers
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# Build Artifacts & Caches
+dist/
+**/dist/
+build/
+**/build/
+out/
+.next/
+**/.next/
+.turbo/
+**/.turbo/
+.vite/
+**/.vite/
+.cache/
+
+# Local Database & Infrastructure Binaries
+infrastructure/pgsql/
+**/infrastructure/pgsql/
+infrastructure/postgres_data/
+**/infrastructure/postgres_data/
+pgsql/
+postgres_data/
+
+# Java / Maven
+target/
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Python / ML
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+venv/
+.venv/
+env/
+**/venv/
+**/.venv/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE & Editors
+.idea/
+*.swp
+*.swo
+*~

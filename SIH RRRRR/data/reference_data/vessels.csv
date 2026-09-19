@@ -1,0 +1,5 @@
+id,name,vessel_class_id,dwt,draft_m,loa_m,beam_m
+1,Handy Pioneer,1,35000.0,10.2,175.0,27.4
+2,Supra Voyager,2,58000.0,12.5,198.0,32.2
+3,Oceanic Panamax,3,82000.0,14.2,229.0,32.3
+4,Cape Enterprise,4,175000.0,17.8,292.0,45.0

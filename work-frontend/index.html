@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/anchor.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NAVIK by TKTF — Premium Maritime Freight Intelligence, Vessel Discovery, Route Analysis, Port Operations & NIRNAY AI Decision Support." />
+    <title>NAVIK by TKTF — Maritime Freight Intelligence & Decision Platform</title>
+    <!-- Prevent flash of unstyled theme -->
+    <script>
+      (function() {
+        try {
+          var storedTheme = localStorage.getItem('navik_theme');
+          var systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          var theme = storedTheme || systemTheme;
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
