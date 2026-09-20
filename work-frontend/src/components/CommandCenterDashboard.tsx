@@ -10,6 +10,7 @@ import { freightService } from '../services/freightService';
 import { FreightRate, MarketEvent } from '../types';
 import { MaritimeGlobe } from './route-intelligence/MaritimeGlobe';
 import { MARITIME_CHOKEPOINTS } from './route-intelligence/chokepointsData';
+import { CargoShipSceneHero } from './ui/demo';
 
 export default function CommandCenterDashboard() {
   const { scenario, updateLane, updateVessel, updateCargo } = useScenario();
@@ -714,6 +715,14 @@ export default function CommandCenterDashboard() {
           </div>
         </div>
       )}
+
+      {/* Cargo Ship 3D Scene */}
+      <div className="mt-8">
+        <CargoShipSceneHero />
+        <div className="mt-2 text-center text-[10px] text-ink-muted">
+          3D model <a href="https://sketchfab.com/3d-models/cargo-ship-loaded-c14144edcd6f4827a84be12456b51e18" target="_blank" rel="noopener noreferrer" className="hover:text-ink-secondary underline">"Cargo Ship Loaded"</a> by gogiart, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" className="hover:text-ink-secondary underline">CC BY 4.0</a>
+        </div>
+      </div>
 
     </div>
   );
