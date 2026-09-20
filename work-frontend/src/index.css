@@ -347,3 +347,32 @@ input[type=range]:disabled::-webkit-slider-thumb {
 input[type=range]:disabled::-webkit-slider-runnable-track {
   opacity: 0.5;
 }
+
+/* Keep map HUD copy readable over both land and water tiles. */
+.globe-overlay-panel {
+  background: rgba(2, 11, 20, 0.98) !important;
+  border: 1px solid rgba(34, 211, 238, 0.7) !important;
+  color: #f8fafc !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+.globe-overlay-panel .text-slate-200,
+.globe-overlay-panel .text-ink-secondary,
+.globe-overlay-panel .text-ink-muted {
+  color: #e2e8f0 !important;
+}
+
+.globe-overlay-panel .text-ink,
+.globe-overlay-panel .text-white {
+  color: #ffffff !important;
+}
+
+.globe-overlay-control {
+  background: rgba(2, 11, 20, 0.98) !important;
+  border: 1px solid rgba(34, 211, 238, 0.7) !important;
+  color: #ffffff !important;
+}
+
+.globe-overlay-control:hover {
+  background: #0b2233 !important;
+}
