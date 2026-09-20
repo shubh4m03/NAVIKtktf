@@ -21,9 +21,38 @@ export interface MaritimeGlobeProps {
   onSelectVessel?: (vessel: DemoVesselPosition) => void;
 }
 
-// Map styles for authentic nautical appearance
-const DARK_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json';
-const LIGHT_STYLE = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const createBaseStyle = (isLight: boolean): maplibregl.StyleSpecification => ({
+  version: 8,
+  sources: {
+    'base-map': {
+      type: 'raster',
+      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+      tileSize: 256,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
+  layers: [
+    {
+      id: 'background',
+      type: 'background',
+      paint: {
+        'background-color': isLight ? '#dbeafe' : '#071827',
+      },
+    },
+    {
+      id: 'base-map',
+      type: 'raster',
+      source: 'base-map',
+      paint: isLight
+        ? {}
+        : {
+            'raster-brightness-min': 0.1,
+            'raster-brightness-max': 0.5,
+            'raster-saturation': -0.8,
+          },
+    },
+  ],
+});
 
 export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
   ports,
@@ -48,11 +77,9 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
     const container = mapContainerRef.current;
     if (!container) return;
 
-    const styleUrl = isLight ? LIGHT_STYLE : DARK_STYLE;
-
     const map = new maplibregl.Map({
       container,
-      style: styleUrl,
+      style: createBaseStyle(isLight),
       center: [80.0, 12.0], // Centered on Indo-Pacific maritime corridor
       zoom: 2.1,
       minZoom: 1.2,
