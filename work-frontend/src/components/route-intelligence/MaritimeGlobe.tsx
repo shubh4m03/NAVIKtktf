@@ -541,27 +541,27 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
       <div ref={mapContainerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
       {/* Top Left: Oceanic Telemetry HUD */}
-      <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none bg-surface/90 backdrop-blur-sm border border-border-subtle px-3.5 py-2.5 rounded shadow-subtle max-w-xs font-mono">
+      <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none bg-[#06131f]/95 backdrop-blur-sm border border-cyan-400/40 px-3.5 py-2.5 rounded shadow-subtle max-w-xs font-mono text-shadow-sm">
         <div className="flex items-center gap-2 mb-1">
           <div className="w-2 h-2 rounded-full bg-brand-primary" />
-          <h3 className="text-xs font-bold text-ink tracking-wider uppercase">
+          <h3 className="text-xs font-bold text-white tracking-wider uppercase">
             {isGlobeProjection ? '3D MARITIME GLOBE' : 'MERCATOR CHART'}
           </h3>
         </div>
-        <p className="text-[10px] text-ink-secondary mb-2">
+        <p className="text-[10px] text-slate-200 mb-2">
           Real Geographic Corridors · Hydrographic Ports &amp; Chokepoints
         </p>
 
         <div className="flex items-center gap-3 text-[11px]">
           <div>
-            <span className="text-ink-secondary block text-[9px] uppercase tracking-wider">Active Sea Lane</span>
+            <span className="text-slate-200 block text-[9px] uppercase tracking-wider">Active Sea Lane</span>
             <span className="text-brand-primary font-semibold truncate block max-w-[170px]">
               {activeRoute.originPortId.replace('port-', '')} → {activeRoute.destinationPortId.replace('port-', '')}
             </span>
           </div>
           <div className="border-l border-border-subtle pl-3">
-            <span className="text-ink-secondary block text-[9px] uppercase tracking-wider">Distance</span>
-            <span className="text-ink font-semibold">{activeRoute.distanceNauticalMiles.toLocaleString()} NM</span>
+            <span className="text-slate-200 block text-[9px] uppercase tracking-wider">Distance</span>
+            <span className="text-white font-semibold">{activeRoute.distanceNauticalMiles.toLocaleString()} NM</span>
           </div>
         </div>
       </div>
@@ -574,7 +574,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
           className={`px-2.5 py-1.5 rounded border flex items-center justify-between gap-2 transition-colors shadow-subtle ${
             isGlobeProjection
               ? 'bg-brand-primary text-white border-brand-primary'
-              : 'bg-surface/90 border-border-subtle text-ink-secondary hover:text-ink'
+              : 'bg-[#06131f]/95 border-cyan-400/40 text-white hover:text-white'
           }`}
         >
           <Globe className="w-3.5 h-3.5" />
@@ -587,7 +587,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
           className={`px-2.5 py-1.5 rounded border flex items-center justify-between gap-2 transition-colors shadow-subtle ${
             isSpinning
               ? 'bg-brand-primary text-white border-brand-primary'
-              : 'bg-surface/90 border-border-subtle text-ink-secondary hover:text-ink'
+              : 'bg-[#06131f]/95 border-cyan-400/40 text-white hover:text-white'
           }`}
         >
           <RotateCw className={`w-3.5 h-3.5 ${isSpinning ? 'animate-spin' : ''}`} style={{ animationDuration: '10s' }} />
@@ -597,7 +597,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
         <button
           onClick={handleResetMaritimeView}
           title="Reset to Indo-Pacific View"
-          className="px-2.5 py-1.5 rounded border bg-surface/90 border-border-subtle text-ink-secondary hover:text-ink hover:bg-surface-elevated transition-colors shadow-subtle flex items-center justify-between gap-2"
+          className="px-2.5 py-1.5 rounded border bg-[#06131f]/95 border-cyan-400/40 text-white hover:text-white hover:bg-[#0b2233] transition-colors shadow-subtle flex items-center justify-between gap-2"
         >
           <Compass className="w-3.5 h-3.5" />
           <span>INDO-PACIFIC</span>
@@ -607,27 +607,27 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
       {/* Bottom Floating Legend & Vessel Telemetry Disclaimer */}
       <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-none flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
         {/* Maritime Legend */}
-        <div className="pointer-events-auto bg-surface/90 backdrop-blur-sm border border-border-subtle px-3 py-1.5 rounded shadow-subtle flex items-center gap-3 text-[10px] font-mono">
+        <div className="pointer-events-auto bg-[#06131f]/95 backdrop-blur-sm border border-cyan-400/40 px-3 py-1.5 rounded shadow-subtle flex items-center gap-3 text-[10px] font-mono text-white">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block border border-white" />
-            <span className="text-ink-secondary">Port</span>
+            <span className="text-slate-200">Port</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block border border-white" />
-            <span className="text-ink-secondary">Chokepoint</span>
+            <span className="text-slate-200">Chokepoint</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block border border-white" />
-            <span className="text-ink-secondary">Vessel Position</span>
+            <span className="text-slate-200">Vessel Position</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-5 h-1 bg-brand-primary inline-block rounded" />
-            <span className="text-ink font-semibold">Geodesic Route</span>
+            <span className="text-white font-semibold">Geodesic Route</span>
           </div>
         </div>
 
         {/* Demo Data Disclaimer Badge */}
-        <div className="pointer-events-auto bg-surface/95 backdrop-blur-sm border border-border-subtle px-3 py-1.5 rounded shadow-subtle flex items-center gap-1.5 text-[10px] font-mono text-ink-muted">
+        <div className="pointer-events-auto bg-[#06131f]/95 backdrop-blur-sm border border-cyan-400/40 px-3 py-1.5 rounded shadow-subtle flex items-center gap-1.5 text-[10px] font-mono text-slate-200">
           <Info className="w-3.5 h-3.5 text-brand-primary flex-shrink-0" />
           <span>DEMO VESSEL POSITION · Simulated algorithmic tracking</span>
         </div>
