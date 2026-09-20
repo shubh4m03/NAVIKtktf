@@ -50,9 +50,11 @@ export default function WhatIfSimulator() {
 
     // Fetch ML Optimizations based on applied shocks
     setMlLoading(true);
+    const mlApiBase =
+      import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+
     try {
       // 1. Entry Timing Optimizer
-      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
       const entryRes = await fetch(`${mlApiBase}/optimize/entry-timing`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,7 +71,6 @@ export default function WhatIfSimulator() {
       if (entryRes.ok) setEntryTiming(await entryRes.json());
 
       // 2. Portfolio Optimizer
-      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
       const portRes = await fetch(`${mlApiBase}/optimize/portfolio`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -83,7 +84,6 @@ export default function WhatIfSimulator() {
       });
       if (portRes.ok) setPortfolio(await portRes.json());
       // 3. Risk Engine
-      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
       const riskRes = await fetch(`${mlApiBase}/risk/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
