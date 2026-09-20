@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Send, Terminal, CheckCircle2, ChevronRight, Activity, Compass, GitBranch, ArrowRight, ShieldCheck, HelpCircle, History } from 'lucide-react';
+import { Send, Terminal,  Search, Bell, ChevronDown, User, MapPin, Gauge, Activity, AlertTriangle, ShieldCheck, Compass, ArrowRight, History
+} from 'lucide-react';
 import { nirnaynService, NirnayResponse } from '../../services/nirnaynService';
 import { useMasterData } from '../../hooks/useMasterData';
 import { useScenario } from '../../context/ScenarioContext';
@@ -9,7 +10,7 @@ const promptPresets = [
   'Should we lock in a 30-day time charter now or play the spot market?',
   'What is the cost impact of rerouting via Cape of Good Hope instead of Suez?',
   'Evaluate 75,000 MT coking coal feasibility from Hay Point to Dhamra.',
-];
+] as const;
 
 const mockRecentInquiries = [
   { id: '1', title: 'Paradip Port Draft Clearance', date: 'Today 14:20 UTC', status: 'Panamax Validated' },
@@ -137,11 +138,11 @@ export default function NirnayCommandCenter() {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg text-left">
-                  <button onClick={() => { setQuery(promptPresets[0]); handleAsk(promptPresets[0]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
+                  <button onClick={() => { setQuery(promptPresets[0] || ''); handleAsk(promptPresets[0]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
                     <span className="truncate pr-2">Why Capesize is not recommended?</span>
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
-                  <button onClick={() => { setQuery(promptPresets[1]); handleAsk(promptPresets[1]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
+                  <button onClick={() => { setQuery(promptPresets[1] || ''); handleAsk(promptPresets[1]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
                     <span className="truncate pr-2">Spot market vs Time charter</span>
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
