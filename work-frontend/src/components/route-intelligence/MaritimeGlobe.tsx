@@ -501,7 +501,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
     const spin = () => {
       if (!isSpinning || !map) return;
       const center = map.getCenter();
-      center.lng = (center.lng + 0.15) % 360;
+      center.lng = (center.lng + 0.03) % 360;
       map.setCenter(center);
       animId = requestAnimationFrame(spin);
     };

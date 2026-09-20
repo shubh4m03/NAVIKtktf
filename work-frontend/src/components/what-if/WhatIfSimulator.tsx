@@ -52,7 +52,8 @@ export default function WhatIfSimulator() {
     setMlLoading(true);
     try {
       // 1. Entry Timing Optimizer
-      const entryRes = await fetch('http://localhost:8000/optimize/entry-timing', {
+      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+      const entryRes = await fetch(`${mlApiBase}/optimize/entry-timing`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -68,7 +69,8 @@ export default function WhatIfSimulator() {
       if (entryRes.ok) setEntryTiming(await entryRes.json());
 
       // 2. Portfolio Optimizer
-      const portRes = await fetch('http://localhost:8000/optimize/portfolio', {
+      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+      const portRes = await fetch(`${mlApiBase}/optimize/portfolio`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -81,7 +83,8 @@ export default function WhatIfSimulator() {
       });
       if (portRes.ok) setPortfolio(await portRes.json());
       // 3. Risk Engine
-      const riskRes = await fetch('http://localhost:8000/risk/score', {
+      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+      const riskRes = await fetch(`${mlApiBase}/risk/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -274,16 +277,31 @@ export default function WhatIfSimulator() {
           </div>
         </div>
 
-        {/* Automated Mitigation Advisory */}
-        <div className="card p-4 bg-brand-primary/5 border border-brand-primary/20 flex items-start gap-4">
-          <div className="w-8 h-8 rounded-full bg-brand-primary/20 flex items-center justify-center shrink-0">
-            <Shield className="w-4 h-4 text-brand-primary" />
+        {/* Interactive Freight Rate Impact Graph */}
+        <div className="card p-4 bg-surface border border-border-subtle flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h4 className="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
+              <BarChart3 className="w-4 h-4 text-brand-primary" /> Projected Freight Impact
+            </h4>
+            <span className="text-[10px] text-ink-muted">Simulated 30-Day Projection</span>
           </div>
-          <div>
-            <h4 className="text-xs font-bold text-ink uppercase tracking-wider mb-1">Automated Mitigation Advisory</h4>
-            <p className="text-sm text-ink font-medium leading-relaxed">
-              {advisory}
-            </p>
+          <div className="relative w-full h-[150px] bg-background border-b border-border-subtle rounded mt-2">
+             <svg width="100%" height="100%" viewBox="0 0 600 150" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="impactGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Base Rate Line */}
+                <path d="M 0 100 L 200 100 L 400 100 L 600 100" stroke="#374151" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+                {/* Shock Projected Rate Line */}
+                <path d={`M 0 100 L 200 100 L 400 ${100 - (freightShock * 0.8)} L 600 ${100 - (freightShock * 1.2)}`} stroke="#3b82f6" strokeWidth="3" fill="none" />
+                <path d={`M 0 100 L 200 100 L 400 ${100 - (freightShock * 0.8)} L 600 ${100 - (freightShock * 1.2)} L 600 150 L 0 150 Z`} fill="url(#impactGrad)" />
+             </svg>
+             <div className="absolute top-2 right-2 px-2 py-1 bg-surface border border-border-subtle rounded shadow text-xs font-mono font-bold text-blue-400">
+               {freightShock > 0 ? `+${freightShock}% Spot Market` : 'Baseline'}
+             </div>
           </div>
         </div>
       </div>
@@ -407,10 +425,10 @@ export default function WhatIfSimulator() {
               <button 
                 onClick={handleExecute}
                 disabled={mlLoading}
-                className={`flex items-center gap-2 px-8 py-3.5 rounded font-bold tracking-wider uppercase transition-colors shadow-[0_0_15px_rgba(245,158,11,0.4)] ${
+                className={`flex items-center gap-2 px-8 py-3.5 rounded font-semibold transition-colors ${
                   mlLoading 
-                    ? 'bg-amber-500/50 text-black/50 cursor-not-allowed' 
-                    : 'bg-amber-500 hover:bg-amber-400 text-black'
+                    ? 'bg-surface-elevated text-ink-muted cursor-not-allowed' 
+                    : 'bg-brand-primary hover:bg-brand-deep text-background'
                 }`}
               >
                 <Play className="w-5 h-5" /> {mlLoading ? 'Computing ML Scenarios...' : 'Execute What-If Perturbation'}
@@ -454,7 +472,7 @@ export default function WhatIfSimulator() {
                     )}
                   </div>
                   <div className="bg-surface p-3 border border-border-subtle rounded text-sm text-ink-secondary leading-relaxed">
-                    <strong className="text-ink">Rationale:</strong> {entryTiming.rationale}
+                    <strong className="text-ink">Rationale:</strong> {typeof entryTiming.rationale === 'string' ? entryTiming.rationale : (entryTiming.rationale?.narrative || 'See details in payload')}
                   </div>
                 </div>
               )}

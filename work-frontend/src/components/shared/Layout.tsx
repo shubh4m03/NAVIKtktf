@@ -4,6 +4,7 @@ import { Search, Sun, Moon, Settings, Menu, X, Compass, LayoutDashboard, LineCha
 import { useTheme } from '../../context/ThemeContext';
 import { CommandPalette } from './CommandPalette';
 import { SettingsModal } from './SettingsModal';
+import { CommandStepper } from './CommandStepper';
 import { datasetMetadata } from '../../data/metadata';
 
 const NAV_LINKS = [
@@ -48,8 +49,8 @@ export default function Layout() {
         
         {/* Brand Lockup */}
         <Link to="/decision" className="h-16 flex items-center px-6 border-b border-border-subtle group focus:outline-hidden">
-          <div className="w-8 h-8 rounded bg-brand-primary/15 border border-brand-primary/40 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-colors shrink-0 mr-3">
-            <Compass className="w-4 h-4" />
+          <div className="w-8 h-8 rounded flex items-center justify-center shrink-0 mr-3 overflow-hidden">
+            <img src="/logo.png" alt="NAVIK Logo" className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold tracking-wider text-ink text-sm font-mono leading-none">
@@ -116,7 +117,7 @@ export default function Layout() {
         {/* Mobile Header (Only visible on small screens) */}
         <header className="lg:hidden h-14 border-b border-border-subtle bg-surface flex items-center justify-between px-4 sticky top-0 z-40 shrink-0">
           <Link to="/decision" className="flex items-center gap-2">
-            <Compass className="w-5 h-5 text-brand-primary" />
+            <img src="/logo.png" alt="NAVIK Logo" className="w-6 h-6 object-contain" />
             <span className="font-bold font-mono text-ink">NAVIK</span>
           </Link>
           <div className="flex items-center gap-3">
@@ -159,6 +160,10 @@ export default function Layout() {
         )}
 
         <div className="flex-1 flex flex-col relative overflow-hidden">
+           <div className="bg-brand-primary/10 border-b border-brand-primary/20 px-4 py-1.5 flex justify-center items-center gap-2 text-[10px] font-mono text-brand-primary uppercase tracking-widest shrink-0 z-50">
+              <ShieldAlert className="w-3 h-3" /> System in Simulation Mode — Using Historical Mock Datasets
+           </div>
+           <CommandStepper />
            <Outlet />
         </div>
       </main>

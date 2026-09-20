@@ -106,163 +106,161 @@ export default function NirnayCommandCenter() {
       </aside>
 
       {/* ── Center: Decision Synthesis Workstation ── */}
-      <div className="flex-1 flex flex-col p-4 lg:p-6 overflow-y-auto">
-        <header className="mb-4 border-b border-border-subtle pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2.5">
-            {/* Minimal Navigation Decision Node Mark */}
-            <div className="w-7 h-7 rounded bg-brand-primary/15 border border-brand-primary/30 flex items-center justify-center text-brand-primary">
-              <GitBranch className="w-4 h-4" />
+      <div className="flex-1 flex flex-col relative bg-background">
+        {/* Header */}
+        <header className="h-16 border-b border-border-subtle flex items-center px-6 shrink-0 bg-surface/50 backdrop-blur-md z-10 sticky top-0">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-brand-primary/10 border border-brand-primary/30 flex items-center justify-center text-brand-primary">
+              <Compass className="w-4 h-4" />
             </div>
             <div>
-              <h1 className="text-base font-bold text-ink tracking-normal">
-                NIRNAY Maritime Decision Intelligence
-              </h1>
-              <p className="text-xs text-ink-secondary">
-                Explainable chartering optimization, physical berthing validation, and macroeconomic risk synthesis.
-              </p>
+              <h1 className="text-sm font-bold text-ink">NIRNAY AI Decision Support</h1>
+              <p className="text-[10px] text-ink-secondary font-mono tracking-wide">ENGINE: v2.4 (LIVE)</p>
             </div>
-          </div>
-
-          <div className="text-xs font-mono text-ink-muted">
-            ENGINE: <span className="text-brand-primary font-semibold">NIRNAY CORE v2.4</span>
           </div>
         </header>
 
-        {/* Workstation Content Area */}
-        <div className="flex-1 flex flex-col space-y-4">
-          {/* Initial State */}
-          {!response && !isAnalyzing && (
-            <div className="card p-6 max-w-xl mx-auto mt-4 space-y-3.5 border border-border-subtle shadow-panel">
-              <div className="flex items-center gap-2 text-brand-primary text-xs font-bold">
-                <Compass className="w-4 h-4" /> Decision Support Console
-              </div>
-              <p className="text-xs text-ink-secondary leading-relaxed">
-                Select an operational dilemma from the archive on the left or type an inquiry into the command console below to generate a physics-grounded maritime synthesis.
-              </p>
-
-              <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-mono">
-                <div className="p-2.5 rounded bg-background-raised border border-border-subtle">
-                  <span className="text-xs text-ink-muted block font-medium mb-1">Physical checks</span>
-                  <span className="text-ink">Draft, DWT, Beam, Canal Locks</span>
+        {/* Scrollable Chat Area */}
+        <div className="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth pb-32">
+          <div className="max-w-3xl mx-auto flex flex-col space-y-6">
+            
+            {/* Initial State / Welcome */}
+            {!response && !isAnalyzing && (
+              <div className="flex flex-col items-center justify-center h-full min-h-[40vh] text-center space-y-6 animate-fade-in">
+                <div className="w-16 h-16 rounded-full bg-brand-primary/10 border border-brand-primary/30 flex items-center justify-center">
+                  <Compass className="w-8 h-8 text-brand-primary" />
                 </div>
-                <div className="p-2.5 rounded bg-background-raised border border-border-subtle">
-                  <span className="text-xs text-ink-muted block font-medium mb-1">Commercial checks</span>
-                  <span className="text-ink">Time Charter, Spot Spread, Bunker</span>
+                <div>
+                  <h2 className="text-2xl font-bold text-ink mb-2">How can I assist you?</h2>
+                  <p className="text-sm text-ink-secondary max-w-md mx-auto">
+                    Ask me to analyze physical berthing constraints, evaluate chartering options, or compute macroeconomic impacts on your active voyage.
+                  </p>
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Active Decision Synthesis Output */}
-          {response && (
-            <div className="card p-5 space-y-4 shadow-panel border border-border-subtle">
-              {/* Header */}
-              <div className="flex items-center justify-between border-b border-border-subtle pb-3">
-                <div className="flex items-center gap-2">
-                  <GitBranch className="w-4 h-4 text-brand-primary" />
-                  <h3 className="text-sm font-bold text-ink font-sans">
-                    Decision Analysis Synthesis
-                  </h3>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-mono">
-                  <span className="text-ink-secondary">CERTAINTY:</span>
-                  <span className="text-status-success font-semibold bg-status-success-bg px-2 py-0.5 rounded border border-status-success">
-                    {(response.confidence * 100).toFixed(0)}% CONFIDENCE
-                  </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg text-left">
+                  <button onClick={() => { setQuery(promptPresets[0]); handleAsk(promptPresets[0]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
+                    <span className="truncate pr-2">Why Capesize is not recommended?</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
+                  <button onClick={() => { setQuery(promptPresets[1]); handleAsk(promptPresets[1]); }} className="p-3 bg-surface hover:bg-surface-elevated border border-border-subtle rounded transition-colors text-xs text-ink-secondary hover:text-ink flex items-center justify-between group">
+                    <span className="truncate pr-2">Spot market vs Time charter</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 </div>
               </div>
+            )}
 
-              {/* Recommended Directive */}
-              <div className="p-3.5 rounded bg-background-raised border border-border-subtle space-y-1">
-                <span className="text-xs text-brand-primary font-bold">
-                  Strategic operational directive
-                </span>
-                <p className="text-sm text-ink font-bold leading-relaxed">{response.recommendedApproach}</p>
-              </div>
-
-              {/* Rationale Breakdown */}
-              <div className="space-y-2">
-                <span className="text-xs text-ink-secondary font-medium block">
-                  Grounding &amp; technical rationale
-                </span>
-                <div className="space-y-1.5">
-                  {response.rationale.map((r, i) => (
-                    <div
-                      key={i}
-                      className="text-xs text-ink flex items-start gap-2.5 p-2 rounded bg-background-raised border border-border-subtle"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-status-success mt-0.5 shrink-0" />
-                      <span className="leading-relaxed">{r}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Trade-offs */}
-              {response.tradeoffs && (
-                <div className="space-y-2">
-                  <span className="text-xs text-ink-secondary font-medium block">
-                    Operational trade-offs &amp; contingencies
-                  </span>
-                  <div className="space-y-1.5">
-                    {response.tradeoffs.map((t, i) => (
-                      <div
-                        key={i}
-                        className="text-xs text-ink-secondary flex items-start gap-2 p-2 rounded bg-background-raised/60 border border-border-subtle/60"
-                      >
-                        <ChevronRight className="w-3.5 h-3.5 text-status-warning mt-0.5 shrink-0" />
-                        <span>{t}</span>
-                      </div>
-                    ))}
+            {/* Active Chat Thread */}
+            {(isAnalyzing || response) && (
+              <>
+                {/* User Message Bubble */}
+                <div className="flex justify-end animate-fade-in-up">
+                  <div className="max-w-[80%] bg-surface-elevated border border-border-subtle p-4 rounded-2xl rounded-tr-sm shadow-subtle">
+                    <p className="text-sm text-ink">{query}</p>
                   </div>
                 </div>
-              )}
 
-              {/* Action Bar */}
-              <div className="flex justify-between items-center pt-3 border-t border-border-subtle text-xs font-mono">
-                <span className="text-ink-muted">Objective: {response.objective}</span>
-                <button
-                  onClick={() => handleAsk()}
-                  className="btn-secondary text-xs"
-                >
-                  Recalculate
-                </button>
-              </div>
-            </div>
-          )}
+                {/* AI Response Container */}
+                <div className="flex justify-start animate-fade-in">
+                  <div className="max-w-[90%] md:max-w-[85%] space-y-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-full bg-brand-primary flex items-center justify-center text-white">
+                        <Compass className="w-3 h-3" />
+                      </div>
+                      <span className="text-xs font-bold text-ink">NIRNAY AI</span>
+                    </div>
 
-          {/* Loading State */}
-          {isAnalyzing && (
-            <div className="card p-8 flex flex-col items-center justify-center space-y-2.5 border border-border-subtle">
-              <Terminal className="w-5 h-5 text-brand-primary animate-pulse" />
-              <div className="text-xs text-ink font-bold">
-                NIRNAY analyzing hydrodynamic drafts &amp; freight spreads...
-              </div>
-              <p className="text-[11px] text-ink-secondary font-mono">
-                Cross-referencing port berth limits, voyage distance, and fuel market momentum
-              </p>
-            </div>
-          )}
+                    {isAnalyzing ? (
+                      <div className="p-4 bg-background-raised border border-border-subtle rounded-2xl rounded-tl-sm space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-brand-primary/50 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                            <div className="w-2 h-2 bg-brand-primary/50 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                            <div className="w-2 h-2 bg-brand-primary/50 rounded-full animate-bounce"></div>
+                          </div>
+                          <span className="text-xs text-ink-secondary font-mono tracking-wide">Synthesizing hydrodynamics & market spreads...</span>
+                        </div>
+                      </div>
+                    ) : response ? (
+                      <div className="bg-background-raised border border-border-subtle rounded-2xl rounded-tl-sm shadow-panel overflow-hidden">
+                        {/* Summary / Directive */}
+                        <div className="p-5 border-b border-border-subtle">
+                           <div className="flex items-center gap-2 mb-2">
+                             <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-status-success-bg text-status-success border border-status-success/30">
+                               Confidence: {(response.confidence * 100).toFixed(0)}%
+                             </span>
+                             <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-surface border border-border-subtle text-ink-muted">
+                               Objective: {response.objective}
+                             </span>
+                           </div>
+                           <h3 className="text-base font-bold text-ink leading-relaxed">
+                             {response.recommendedApproach}
+                           </h3>
+                        </div>
+
+                        <div className="p-5 space-y-5 bg-surface/30">
+                          {/* Rationale */}
+                          <div>
+                            <h4 className="text-xs font-bold text-ink-muted uppercase tracking-wider mb-3 flex items-center gap-2">
+                              <ShieldCheck className="w-4 h-4 text-brand-primary" /> Technical Rationale
+                            </h4>
+                            <div className="space-y-2">
+                              {response.rationale.map((r, i) => (
+                                <div key={i} className="flex gap-3 text-sm text-ink-secondary">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-brand-primary mt-2 shrink-0" />
+                                  <span className="leading-relaxed">{r}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Tradeoffs */}
+                          {response.tradeoffs && (
+                            <div>
+                              <h4 className="text-xs font-bold text-ink-muted uppercase tracking-wider mb-3 flex items-center gap-2">
+                                <Activity className="w-4 h-4 text-ink-secondary" /> Operational Trade-offs
+                              </h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {response.tradeoffs.map((t, i) => (
+                                  <div key={i} className="p-3 border border-border-subtle text-xs text-ink-secondary flex gap-2 items-start bg-surface/50">
+                                    <AlertTriangle className="w-3.5 h-3.5 text-ink-secondary shrink-0 mt-0.5" />
+                                    <span>{t}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
-        {/* Command Console Input */}
-        <div className="mt-auto pt-4 relative">
-          <input
-            type="text"
-            placeholder="Ask NIRNAY about cargo feasibility, draft clearances, voyage routing, or charter timing..."
-            className="field-input py-2.5 pl-3.5 pr-14 text-xs font-mono"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleAsk()}
-          />
-          <button
-            className="absolute right-1.5 top-1.5 px-3 py-1 bg-brand-primary hover:bg-brand-primary text-white rounded text-xs font-mono flex items-center gap-1.5 transition-colors disabled:opacity-50"
-            onClick={() => handleAsk()}
-            disabled={isAnalyzing || !query.trim()}
-          >
-            <Send className="w-3 h-3" />
-            <span>ASK</span>
-          </button>
+        {/* Floating Input Area */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent pt-12">
+          <div className="max-w-3xl mx-auto relative group">
+            <input
+              type="text"
+              placeholder="Ask NIRNAY anything..."
+              className="w-full bg-surface border border-border-subtle hover:border-brand-primary/50 focus:border-brand-primary outline-none rounded-none py-4 pl-6 pr-16 text-sm text-ink transition-all"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleAsk()}
+            />
+            <button
+              className="absolute right-2 top-2 bottom-2 aspect-square bg-brand-primary hover:bg-brand-deep text-background rounded-none flex items-center justify-center transition-all disabled:opacity-50 disabled:hover:bg-brand-primary"
+              onClick={() => handleAsk()}
+              disabled={isAnalyzing || !query.trim()}
+            >
+              <Send className="w-4 h-4 -ml-0.5" />
+            </button>
+          </div>
+          <div className="text-center mt-2">
+            <span className="text-[10px] text-ink-muted font-mono tracking-widest uppercase">AI generated content may be inaccurate</span>
+          </div>
         </div>
       </div>
 

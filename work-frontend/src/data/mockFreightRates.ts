@@ -1,9 +1,10 @@
 import { FreightRate } from '../types';
 
-// Generate some deterministic demo data for the Australia -> India route (Panamax)
+// Generate some pseudo-random demo data for the Australia -> India route (Panamax)
 const generateFreightData = (): FreightRate[] => {
   const rates: FreightRate[] = [];
-  let currentRate = 12.5; // Starting base rate
+  const BASE_RATE = 14.5;
+  let currentRate = BASE_RATE; 
 
   // Generate for the past 12 months, roughly every 5 days
   const startDate = new Date('2025-09-18');
@@ -11,11 +12,12 @@ const generateFreightData = (): FreightRate[] => {
     const d = new Date(startDate);
     d.setDate(d.getDate() + (i * 5));
     
-    // Add some noise and trend
-    const noise = (Math.random() - 0.5) * 1.5;
-    const trend = (i > 30 && i < 45) ? 0.2 : (i > 60 ? -0.1 : 0.05);
+    // Mean-reverting random walk with noise
+    const noise = (Math.random() - 0.5) * 2.5; 
+    const meanReversion = (BASE_RATE - currentRate) * 0.15;
+    const volatility = (Math.random() > 0.8) ? (Math.random() - 0.5) * 3.0 : 0; // occasional spikes
     
-    currentRate = Math.max(8.0, currentRate + trend + noise);
+    currentRate = Math.max(6.0, currentRate + meanReversion + noise + volatility);
     
     rates.push({
       date: d.toISOString().slice(0, 10),

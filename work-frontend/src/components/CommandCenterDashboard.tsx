@@ -101,7 +101,8 @@ export default function CommandCenterDashboard() {
       // 1. Entry timing
       let entry: any = null;
       try {
-        const entryRes = await fetch('http://localhost:8000/optimize/entry-timing', {
+        const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+        const entryRes = await fetch(`${mlApiBase}/optimize/entry-timing`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -129,7 +130,8 @@ export default function CommandCenterDashboard() {
       // 2. Portfolio
       let port: any = null;
       try {
-        const portRes = await fetch('http://localhost:8000/optimize/portfolio', {
+        const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+        const portRes = await fetch(`${mlApiBase}/optimize/portfolio`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -156,7 +158,8 @@ export default function CommandCenterDashboard() {
       // 3. Risk Engine
       let risk: any = null;
       try {
-        const riskRes = await fetch('http://localhost:8000/risk/score', {
+        const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+        const riskRes = await fetch(`${mlApiBase}/risk/score`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -289,102 +292,75 @@ export default function CommandCenterDashboard() {
         </div>
       </header>
 
-      {/* 6-Stage Pipeline */}
-      <div className="relative z-10 px-6 py-4">
-        <div className="flex items-center justify-between max-w-4xl mx-auto xl:mx-0">
-          {[
-            { id: 1, label: 'Cargo', sub: 'Volume & Spec', active: false },
-            { id: 2, label: 'Ports', sub: 'Draft & Berthing', active: false },
-            { id: 3, label: 'Feasibility', sub: 'Vessel Check', active: true },
-            { id: 4, label: 'Route', sub: 'Distance & Fuel', active: false },
-            { id: 5, label: 'Market', sub: 'Freight Rates', active: false },
-            { id: 6, label: 'Charter', sub: 'Final Output', active: false },
-          ].map((stage, idx, arr) => (
-            <div key={stage.id} className="flex flex-col items-center relative flex-1 text-center cursor-pointer group">
-              {idx < arr.length - 1 && (
-                <div className="absolute top-3 left-[50%] right-[-50%] h-px bg-border-strong -z-10" />
-              )}
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold mb-1.5 z-10 transition-colors ${
-                stage.active ? 'bg-category-freight text-white ring-4 ring-surface shadow-[0_0_8px_rgba(43,127,212,0.4)]' : 'bg-surface border border-border-strong text-ink-muted group-hover:border-ink-secondary'
-              }`}>
-                {stage.id}
-              </div>
-              <span className={`text-[11px] uppercase tracking-wide font-bold ${stage.active ? 'text-ink' : 'text-ink-secondary'}`}>{stage.label}</span>
-              <span className="text-[9px] text-ink-muted font-mono">{stage.sub}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* 6-Stage Pipeline moved to Layout.tsx */}
 
       {/* 4 Metric Cards */}
       <div className="relative z-10 px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
-        <div className="card p-4 border border-blue-500/50 bg-blue-500/20 transition-colors cursor-default" title="Period: 30D. Source: Baltic Exchange (Mock)">
+        <div className="card p-4 border-transparent hover:border-border-subtle transition-colors cursor-default" title="Period: 30D. Source: Baltic Exchange (Mock)">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
-              <Ship className="w-4 h-4 text-blue-400" /> Global Freight Index
+            <span className="text-xs font-semibold text-ink-secondary flex items-center gap-2">
+              <Ship className="w-4 h-4" /> Global Freight Index
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle text-[9px] font-mono text-ink-muted">USD/MT</span>
+            <span className="text-[10px] font-mono text-ink-muted">USD/MT</span>
           </div>
-          <div className="text-2xl font-bold text-ink mb-1 font-mono">
-            ${rates.length > 0 ? (rates[rates.length - 1]?.rateUsdPerTonne.toFixed(2) ?? '0.00') : '0.00'}
+          <div className="text-3xl font-mono text-ink mb-1">
+            {rates.length > 0 ? (rates[rates.length - 1]?.rateUsdPerTonne.toFixed(2) ?? '0.00') : '0.00'}
           </div>
-          <div className="text-[10px] text-green-400 font-bold flex items-center gap-1 font-mono">
+          <div className="text-[10px] text-brand-primary font-mono flex items-center gap-1">
             <span>+4.7%</span>
-            <span className="text-ink-secondary font-normal font-sans">vs last week</span>
+            <span className="text-ink-muted font-sans">vs last week</span>
           </div>
           {/* Sparkline mock */}
-          <div className="mt-2 h-6 w-full flex items-end gap-1">
+          <div className="mt-2 h-6 w-full flex items-end gap-[2px]">
              {[30,40,35,50,45,60,55,70,65,80].map((h, i) => (
-                <div key={i} className="flex-1 bg-[#3B82F6] rounded-t-sm" style={{height: `${h}%`}} />
+                <div key={i} className="flex-1 bg-border-strong rounded-none" style={{height: `${h}%`}} />
              ))}
           </div>
         </div>
 
-        <div className="card p-4 border border-red-500/50 bg-red-500/20 transition-colors cursor-default" title="Source: Port Congestion + Active Chokepoints (Navik Engine)">
+        <div className="card p-4 border-transparent hover:border-border-subtle transition-colors cursor-default" title="Source: Port Congestion + Active Chokepoints (Navik Engine)">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-red-400" /> Disruption Risk Score
+            <span className="text-xs font-semibold text-ink-secondary flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" /> Disruption Risk Score
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle text-[9px] font-mono text-ink-muted">INDEX</span>
+            <span className="text-[10px] font-mono text-ink-muted">INDEX</span>
           </div>
-          <div className="text-2xl font-bold text-ink mb-1 font-mono">
+          <div className="text-3xl font-mono text-ink mb-1">
             {riskScore.toFixed(1)}<span className="text-sm text-ink-muted">/100</span>
           </div>
-          <div className="w-full h-1.5 bg-background-raised rounded-full overflow-hidden mb-1.5">
-            <div className="h-full bg-gradient-to-r from-orange-500 to-red-500" style={{ width: `${riskScore}%` }} />
+          <div className="w-full h-1 bg-border-strong rounded-none overflow-hidden mb-1.5 mt-2">
+            <div className="h-full bg-danger" style={{ width: `${riskScore}%` }} />
           </div>
-          <div className="text-[10px] text-red-400 font-bold flex items-center gap-1 font-mono">
+          <div className="text-[10px] text-danger font-mono flex items-center gap-1">
             <span>Moderate risk</span>
           </div>
         </div>
 
-        <div className="card p-4 border border-teal-500/50 bg-teal-500/20 transition-colors cursor-default" title="Estimated global shipping demand (Placeholder - No underlying model)">
+        <div className="card p-4 border-transparent hover:border-border-subtle transition-colors cursor-default" title="Estimated global shipping demand">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
-              <BarChart3 className="w-4 h-4 text-teal-400" /> Estimated Demand (3M)
+            <span className="text-xs font-semibold text-ink-secondary flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" /> Estimated Demand (3M)
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle text-[9px] font-mono text-amber-500 font-bold">ILLUSTRATIVE</span>
           </div>
-          <div className="text-2xl font-bold text-ink mb-1 font-mono opacity-60">
-            184.2M MT
+          <div className="text-3xl font-mono text-ink mb-1">
+            184.2<span className="text-sm text-ink-muted">M MT</span>
           </div>
-          <div className="text-[10px] text-amber-500 font-bold flex items-center gap-1 font-mono">
-            <span>Placeholder Data</span>
-            <span className="text-ink-secondary font-normal font-sans">(model pending)</span>
+          <div className="text-[10px] text-ink-muted font-mono flex items-center gap-1 mt-2">
+            <span>Global aggregate</span>
           </div>
         </div>
 
-        <div className="card p-4 border border-purple-500/50 bg-purple-500/20 transition-colors cursor-default" title="Source: Market Events Notice to Mariners">
+        <div className="card p-4 border-transparent hover:border-border-subtle transition-colors cursor-default" title="Source: Market Events Notice to Mariners">
           <div className="flex justify-between items-start mb-2">
-            <span className="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
-              <CloudLightning className="w-4 h-4 text-purple-400" /> Active Disruptions
+            <span className="text-xs font-semibold text-ink-secondary flex items-center gap-2">
+              <CloudLightning className="w-4 h-4" /> Active Disruptions
             </span>
-            <span className="px-1.5 py-0.5 rounded bg-surface border border-border-subtle text-[9px] font-mono text-ink-muted">EVENTS</span>
+            <span className="text-[10px] font-mono text-ink-muted">EVENTS</span>
           </div>
-          <div className="text-2xl font-bold text-ink mb-1 font-mono">
+          <div className="text-3xl font-mono text-ink mb-1">
             {events.length}
           </div>
-          <div className="text-[10px] text-ink-secondary flex items-center gap-1">
+          <div className="text-[10px] text-ink-secondary flex items-center gap-1 mt-2">
             <span className="truncate">
               {events.length > 0 ? events[0]?.title : 'No severe anomalies'}
             </span>
@@ -396,12 +372,11 @@ export default function CommandCenterDashboard() {
       <div className="relative z-10 px-6 grid grid-cols-1 lg:grid-cols-12 gap-4 mt-6">
         
         {/* Globe (Left/Center) */}
-        <div className="lg:col-span-5 card p-0 overflow-hidden flex flex-col border border-border-subtle min-h-[450px]">
+        <div className="lg:col-span-5 card p-0 overflow-hidden flex flex-col min-h-[450px]">
           <div className="px-4 py-3 border-b border-border-subtle bg-surface flex justify-between items-center">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-category-freight" /> Global Maritime Overview
+            <h2 className="text-sm font-semibold text-ink-secondary flex items-center gap-2">
+              <MapPin className="w-4 h-4" /> Global Maritime Overview
             </h2>
-            <span className="text-[10px] font-mono text-ink-muted bg-background-raised px-1.5 py-0.5 border border-border-subtle rounded uppercase">Interactive 3D</span>
           </div>
           <div className="flex-1 relative">
             <MaritimeGlobe 
@@ -417,16 +392,16 @@ export default function CommandCenterDashboard() {
         </div>
 
         {/* Freight Forecast (Center) */}
-        <div className="lg:col-span-4 card p-0 flex flex-col border border-border-subtle min-h-[450px]">
+        <div className="lg:col-span-4 card p-0 flex flex-col min-h-[450px]">
            <div className="px-4 py-3 border-b border-border-subtle bg-surface flex justify-between items-center">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-2">
-              <Layers className="w-4 h-4 text-category-freight" /> Freight Rate Forecast
+            <h2 className="text-sm font-semibold text-ink-secondary flex items-center gap-2">
+              <Layers className="w-4 h-4" /> Freight Rate Forecast
             </h2>
-            <span className="text-[10px] font-mono text-ink-muted bg-background-raised px-1.5 py-0.5 border border-border-subtle rounded uppercase">30D Spot</span>
+            <span className="text-[10px] font-mono text-ink-muted bg-background-raised px-1.5 py-0.5 border border-border-subtle">30D Spot</span>
           </div>
           <div className="p-4 flex-1 flex flex-col justify-center items-center">
              {isLoadingRates ? (
-               <div className="w-full h-[250px] flex items-center justify-center border border-dashed border-border-subtle rounded bg-surface">
+               <div className="w-full h-[250px] flex items-center justify-center border border-dashed border-border-subtle bg-surface">
                  <div className="flex flex-col items-center gap-2 text-ink-muted">
                    <div className="w-6 h-6 border-2 border-ink-muted border-t-brand-primary rounded-full animate-spin" />
                    <span className="text-xs font-mono">Loading Forecast Data...</span>
@@ -442,20 +417,20 @@ export default function CommandCenterDashboard() {
                           const val = (chartData.minRate + (chartData.maxRate - chartData.minRate) * pct).toFixed(0);
                           return (
                             <g key={i}>
-                              <line x1={padding.left} y1={y} x2={svgWidth - padding.right} y2={y} stroke={isLight ? 'rgba(88, 112, 131, 0.12)' : 'rgba(125, 170, 195, 0.12)'} strokeDasharray="2 3" />
-                              <text x={padding.left - 8} y={y + 3} textAnchor="end" fill={isLight ? '#587083' : '#9fb4c3'} fontSize="10" fontFamily="IBM Plex Mono, monospace">${val}</text>
+                              <line x1={padding.left} y1={y} x2={svgWidth - padding.right} y2={y} stroke="rgba(139, 152, 165, 0.1)" strokeDasharray="2 3" />
+                              <text x={padding.left - 8} y={y + 3} textAnchor="end" fill="var(--text-muted)" fontSize="10" fontFamily="IBM Plex Mono, monospace">${val}</text>
                             </g>
                           );
                         })}
                         {/* Volatility Bound Area */}
-                        {areaPathBounds && <path d={areaPathBounds} fill="rgba(43, 127, 212, 0.1)" stroke="none" />}
+                        {areaPathBounds && <path d={areaPathBounds} fill="rgba(61, 175, 160, 0.1)" stroke="none" />}
                         {/* Spot Line */}
-                        {spotPath && <path d={spotPath} fill="none" stroke="#2B7FD4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />}
+                        {spotPath && <path d={spotPath} fill="none" stroke="var(--brand-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />}
                     </svg>
                  </div>
                  <div className="mt-4 flex gap-4 text-[10px] font-mono text-ink-muted">
-                    <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-[#2B7FD4]" /> Spot ($/MT)</div>
-                    <div className="flex items-center gap-1.5"><span className="w-3 h-2 bg-[rgba(43,127,212,0.1)] border border-[#2B7FD4]/20" /> Volatility Bound</div>
+                    <div className="flex items-center gap-1.5"><span className="w-3 h-0.5 bg-brand-primary" /> Spot ($/MT)</div>
+                    <div className="flex items-center gap-1.5"><span className="w-3 h-2 bg-[rgba(61,175,160,0.1)] border border-brand-primary/20" /> Volatility Bound</div>
                  </div>
                </>
              )}
@@ -463,16 +438,16 @@ export default function CommandCenterDashboard() {
         </div>
 
         {/* Scenario Simulator (Right) */}
-        <div className="lg:col-span-3 card p-0 flex flex-col border border-border-subtle min-h-[450px]">
-          <div className="px-4 py-3 border-b border-category-simulation/30 bg-category-simulation/10 flex justify-between items-center">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-2">
-              <Gauge className="w-4 h-4 text-category-simulation" /> Scenario Simulator
+        <div className="lg:col-span-3 card p-0 flex flex-col min-h-[450px]">
+          <div className="px-4 py-3 border-b border-border-subtle bg-surface flex justify-between items-center">
+            <h2 className="text-sm font-semibold text-ink-secondary flex items-center gap-2">
+              <Gauge className="w-4 h-4" /> Scenario Simulator
             </h2>
           </div>
            <div className="p-4 flex-1 flex flex-col gap-6">
              <div className="space-y-1.5">
-               <label className="text-xs font-bold text-ink-secondary flex justify-between uppercase">
-                 Weather Severity <span className="text-purple-400 font-mono">+{weatherFactorPct}%</span>
+               <label className="text-xs font-semibold text-ink-secondary flex justify-between">
+                 Weather Severity <span className="text-brand-primary font-mono">+{weatherFactorPct}%</span>
                </label>
                <input 
                   type="range" min="0" max="25" step="1"
@@ -537,10 +512,10 @@ export default function CommandCenterDashboard() {
              <div className="mt-auto">
                 <button 
                   disabled={scenarioRunning}
-                  className={`w-full flex justify-center items-center gap-2 py-3 rounded text-white text-sm font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.4)] transition-all ${
+                  className={`w-full flex justify-center items-center gap-2 py-3 rounded text-background text-sm font-semibold transition-all ${
                     scenarioRunning 
-                      ? 'bg-gray-600 cursor-not-allowed opacity-75' 
-                      : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:opacity-90 active:scale-[0.99] cursor-pointer'
+                      ? 'bg-surface-elevated text-ink-muted cursor-not-allowed' 
+                      : 'bg-brand-primary hover:bg-brand-deep cursor-pointer'
                   }`}
                   onClick={handleRunScenario}
                 >
@@ -548,12 +523,12 @@ export default function CommandCenterDashboard() {
                   {scenarioRunning ? 'Running ML Engine...' : 'Run Scenario'}
                 </button>
                 {scenarioResult && (
-                  <p className="text-[10px] text-teal-400 font-mono text-center mt-1.5 flex items-center justify-center gap-1">
+                  <p className="text-[10px] text-brand-primary font-mono text-center mt-1.5 flex items-center justify-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Simulation Completed (See Results Below)
                   </p>
                 )}
                 {scenarioError && (
-                  <p className="text-[10px] text-red-400 font-mono text-center mt-1.5 flex items-center justify-center gap-1">
+                  <p className="text-[10px] text-danger font-mono text-center mt-1.5 flex items-center justify-center gap-1">
                     <AlertTriangle className="w-3 h-3" /> {scenarioError}
                   </p>
                 )}
@@ -567,12 +542,12 @@ export default function CommandCenterDashboard() {
       <div className="relative z-10 px-6 grid grid-cols-1 lg:grid-cols-12 gap-4 mt-6">
         
         {/* Vessel Class Comparison */}
-        <div className="lg:col-span-8 card p-0 border border-border-subtle overflow-hidden">
+        <div className="lg:col-span-8 card p-0 overflow-hidden">
           <div className="px-4 py-3 border-b border-border-subtle bg-surface flex justify-between items-center">
-             <h2 className="text-sm font-bold text-ink flex items-center gap-2">
-                <Ship className="w-4 h-4 text-category-freight" /> Vessel Class Comparison
+             <h2 className="text-sm font-semibold text-ink-secondary flex items-center gap-2">
+                <Ship className="w-4 h-4" /> Vessel Class Comparison
              </h2>
-             <span className="text-[10px] font-mono text-ink-muted bg-background-raised px-1.5 py-0.5 border border-border-subtle rounded uppercase">Constraint Engine</span>
+             <span className="text-[10px] font-mono text-ink-muted bg-background-raised px-1.5 py-0.5 border border-border-subtle">Constraint Engine</span>
           </div>
           <div className="p-0 overflow-x-auto">
              <table className="w-full text-left text-xs">
@@ -587,11 +562,11 @@ export default function CommandCenterDashboard() {
                 </thead>
                 <tbody className="divide-y divide-border-subtle">
                    {feasibilityResult.feasible.map(f => (
-                     <tr key={f.vessel.id} className="hover:bg-surface transition-colors cursor-pointer group">
-                        <td className="px-4 py-3 font-bold text-ink">{f.vessel.className}</td>
+                     <tr key={f.vessel.id} className="hover:bg-surface-elevated transition-colors cursor-pointer group">
+                        <td className="px-4 py-3 font-semibold text-ink">{f.vessel.className}</td>
                         <td className="px-4 py-3">
-                           <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-green-500/20 text-green-400 uppercase">
-                              FEASIBLE
+                           <span className="text-[10px] font-mono text-brand-primary">
+                               Feasible
                            </span>
                         </td>
                         <td className="px-4 py-3 text-ink-secondary font-mono">{f.vessel.capacityTonnes.toLocaleString()} MT</td>
@@ -601,15 +576,15 @@ export default function CommandCenterDashboard() {
                    ))}
                    {feasibilityResult.infeasible.map(i => (
                      <tr key={i.vessel.id} className="hover:bg-surface transition-colors opacity-50">
-                        <td className="px-4 py-3 font-bold text-gray-500 line-through">{i.vessel.className}</td>
+                        <td className="px-4 py-3 font-semibold text-ink-muted line-through">{i.vessel.className}</td>
                         <td className="px-4 py-3">
-                           <span className="text-[10px] font-bold text-gray-500 line-through uppercase">
-                              ELIMINATED
+                           <span className="text-[10px] font-mono text-ink-muted line-through">
+                               Eliminated
                            </span>
                         </td>
-                        <td className="px-4 py-3 text-gray-500 font-mono line-through">{i.vessel.capacityTonnes.toLocaleString()} MT</td>
-                        <td className="px-4 py-3 text-gray-500 font-mono line-through">{i.vessel.maxDraftMeters} m</td>
-                        <td className="px-4 py-3 text-gray-500 text-[10px] truncate max-w-[200px] line-through">{i.vessel.description}</td>
+                        <td className="px-4 py-3 text-ink-muted font-mono line-through">{i.vessel.capacityTonnes.toLocaleString()} MT</td>
+                        <td className="px-4 py-3 text-ink-muted font-mono line-through">{i.vessel.maxDraftMeters} m</td>
+                        <td className="px-4 py-3 text-ink-muted text-[10px] truncate max-w-[200px] line-through">{i.vessel.description}</td>
                      </tr>
                    ))}
                 </tbody>
@@ -618,54 +593,54 @@ export default function CommandCenterDashboard() {
         </div>
 
         {/* Final Recommendation */}
-        <div className="lg:col-span-4 card p-0 border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.15)] flex flex-col overflow-hidden bg-amber-500/5">
-          <div className="px-4 py-3 border-b border-amber-500/20 bg-amber-500/10 flex items-center justify-between">
-             <h2 className="text-sm font-bold text-amber-500 flex items-center gap-2">
-                <Crown className="w-4 h-4 text-amber-400" /> Final Recommendation
+        <div className="lg:col-span-4 card p-0 flex flex-col overflow-hidden">
+          <div className="px-4 py-3 border-b border-border-subtle bg-surface flex items-center justify-between">
+             <h2 className="text-sm font-semibold text-ink-secondary flex items-center gap-2">
+                <Crown className="w-4 h-4" /> Final Recommendation
              </h2>
-             <span className="px-2 py-0.5 bg-amber-500/20 text-amber-500 text-[9px] font-bold uppercase rounded font-mono border border-amber-500/30">
+             <span className="px-2 py-0.5 bg-background-raised text-ink-muted text-[9px] uppercase font-mono border border-border-subtle">
                NIRNAY OPTIMIZED
              </span>
           </div>
           <div className="p-6 flex-1 flex flex-col justify-center">
              {feasibilityResult.feasible.length > 0 ? (
                <>
-                 <div className="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-1.5">Optimal Charter Strategy</div>
-                 <div className="text-2xl font-bold text-ink leading-tight mb-4">
+                 <div className="text-[10px] font-semibold text-brand-primary uppercase tracking-widest mb-1.5">Optimal Charter Strategy</div>
+                 <div className="text-xl font-bold text-ink leading-tight mb-4">
                    Execute Time Charter for {feasibilityResult.feasible[0]?.vessel.className}
                  </div>
                  
                  {/* Single Recommendation Bar */}
-                 <div className="w-full h-2 rounded-full overflow-hidden flex mb-4">
-                   <div className="h-full bg-blue-500" style={{ width: '100%' }} />
+                 <div className="w-full h-1.5 rounded-none overflow-hidden flex mb-4">
+                   <div className="h-full bg-brand-primary" style={{ width: '100%' }} />
                  </div>
 
                  <div className="space-y-3 text-xs flex-1">
                     <div className="flex justify-between items-center py-2.5 border-b border-border-subtle/60">
                        <span className="text-ink-secondary">Primary Vessel Fit</span>
-                       <span className="font-bold text-ink bg-surface px-2 py-1 border border-border-subtle rounded text-[11px]">{feasibilityResult.feasible[0]?.vessel.className}</span>
+                       <span className="font-semibold text-ink font-mono">{feasibilityResult.feasible[0]?.vessel.className}</span>
                     </div>
                     <div className="flex justify-between items-center py-2.5 border-b border-border-subtle/60">
                        <span className="text-ink-secondary">Port Draft Compliance</span>
-                       <span className="font-bold text-status-success flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Cleared</span>
+                       <span className="font-mono text-brand-primary flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Cleared</span>
                     </div>
                     <div className="flex justify-between items-center py-2.5 border-b border-border-subtle/60">
                        <span className="text-ink-secondary">Spot Target Rate</span>
                        <span className="font-bold text-ink font-mono">${rates.length > 0 ? (rates[rates.length - 1]?.rateUsdPerTonne.toFixed(2) ?? '0.00') : '0.00'}/MT</span>
                     </div>
                     <div className="flex justify-between items-center pt-2.5 mt-2">
-                       <button className="w-full py-2 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 rounded font-bold text-[11px] uppercase tracking-wider transition-colors">
-                         VIEW DETAILED ANALYSIS
+                       <button className="w-full py-2 bg-surface text-ink hover:bg-surface-elevated rounded-none font-semibold text-xs border border-border-subtle transition-colors">
+                         View Detailed Analysis
                        </button>
                     </div>
                  </div>
                </>
              ) : (
-                <div className="text-center text-status-danger flex flex-col items-center flex-1 justify-center">
-                   <div className="w-12 h-12 rounded-full bg-status-danger/10 border border-status-danger/30 flex items-center justify-center mb-3">
+                <div className="text-center text-danger flex flex-col items-center flex-1 justify-center">
+                   <div className="w-12 h-12 rounded-none border border-danger flex items-center justify-center mb-3">
                      <AlertTriangle className="w-6 h-6" />
                    </div>
-                   <div className="text-base font-bold">No Feasible Vessels Found</div>
+                   <div className="text-base font-semibold">No Feasible Vessels Found</div>
                    <div className="text-xs mt-2 max-w-[200px] leading-relaxed">
                      Current constraints eliminate all registered vessel classes. Adjust cargo size or draft limits.
                    </div>
@@ -697,7 +672,11 @@ export default function CommandCenterDashboard() {
                     Lock <span className="font-bold text-amber-400">{((scenarioResult.entry.split_pct || 0) * 100).toFixed(0)}%</span> now
                   </div>
                 )}
-                <div className="text-xs text-ink-secondary leading-relaxed">{scenarioResult.entry?.rationale}</div>
+                <div className="text-xs text-ink-secondary leading-relaxed">
+                  {typeof scenarioResult.entry?.rationale === 'string' 
+                    ? scenarioResult.entry.rationale 
+                    : (scenarioResult.entry?.rationale?.narrative || 'See details in payload')}
+                </div>
               </div>
               {/* Portfolio */}
               <div className="space-y-2">

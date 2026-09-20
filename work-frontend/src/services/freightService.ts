@@ -84,7 +84,8 @@ export const freightService = {
 
   getForecast: async (originRegion: string, destPort: string, vesselClass: string, days: number = 90) => {
     try {
-      const response = await fetch('http://localhost:8000/forecast', {
+      const mlApiBase = import.meta.env.VITE_ML_API_BASE_URL || 'http://localhost:8000';
+      const response = await fetch(`${mlApiBase}/forecast`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,43 +6,43 @@
 
 /* ─── CSS Variables for Dynamic Semantic Theming ──────────────── */
 :root, [data-theme="dark"] {
-  /* Default: Dark Theme */
-  --bg-base:           #000000;
-  --bg-raised:         #0a0a0a;
-  --surface:           #111111;
-  --surface-elevated:  #1a1a1a;
-  --border-subtle:     #222222;
-  --border-strong:     #333333;
+  /* Dark Theme - Maritime Terminal Aesthetic */
+  --bg-base:           #0B0F14;
+  --bg-raised:         #0F151C;
+  --surface:           #121820;
+  --surface-elevated:  #1A222D;
+  --border-subtle:     #1E2833;
+  --border-strong:     #2D3C4B;
 
-  --brand-primary:     #20B7D7;
-  --brand-deep:        #126B9A;
-  --accent:            #20B7D7;
+  --brand-primary:     #3DAFA0;
+  --brand-deep:        #2D8A7D;
+  --accent:            #3DAFA0;
 
-  --text-primary:      #ededed;
-  --text-secondary:    #a1a1aa;
-  --text-muted:        #71717a;
+  --text-primary:      #E8ECEF;
+  --text-secondary:    #8B98A5;
+  --text-muted:        #5A6B7C;
 
-  --success:           #2E9B6F;
+  --success:           #3DAFA0;
   --warning:           #D59A32;
-  --danger:            #C95454;
-  --info:              #4A90C2;
+  --danger:            #E5484D;
+  --info:              #3DAFA0;
 
-  /* Categorical Command Center Colors */
-  --category-freight:    #2B7FD4;
+  /* Categorical Colors - Muted */
+  --category-freight:    #8B98A5;
   --category-risk:       #E5484D;
-  --category-demand:     #14B8A6;
-  --category-simulation: #8B5CF6;
-  --category-recommend:  #D4A24C;
+  --category-demand:     #8B98A5;
+  --category-simulation: #8B98A5;
+  --category-recommend:  #8B98A5;
 
-  --chart-grid:        rgba(125, 170, 195, 0.14);
-  --shadow-subtle:     0 1px 3px rgba(0, 0, 0, 0.25);
+  --chart-grid:        rgba(139, 152, 165, 0.1);
+  --shadow-subtle:     none;
   
   /* Single-accent chart ramp */
-  --chart-series-1: #20B7D7;
-  --chart-series-2: #126B9A;
-  --chart-series-3: #4A90C2;
-  --chart-series-4: #0A4E73;
-  --chart-series-5: #7DAAC3;
+  --chart-series-1: #3DAFA0;
+  --chart-series-2: #2D8A7D;
+  --chart-series-3: #5BCBC0;
+  --chart-series-4: #1E665D;
+  --chart-series-5: #8CDDDB;
 }
 
 [data-theme="light"] {
@@ -134,9 +134,9 @@
   .card {
     background-color: var(--surface);
     border: 1px solid var(--border-subtle);
-    border-radius: 4px;
-    box-shadow: var(--shadow-subtle);
-    transition: border-color 120ms ease, background-color 120ms ease;
+    border-radius: 0;
+    box-shadow: none;
+    transition: border-color 120ms ease;
   }
 
   .card:hover {
