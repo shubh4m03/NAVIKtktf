@@ -26,9 +26,9 @@ const createBaseStyle = (isLight: boolean): maplibregl.StyleSpecification => ({
   sources: {
     'base-map': {
       type: 'raster',
-      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+      tiles: ['https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'],
       tileSize: 256,
-      attribution: '© OpenStreetMap contributors',
+      attribution: '© OpenStreetMap contributors © CARTO',
     },
   },
   layers: [
@@ -43,13 +43,11 @@ const createBaseStyle = (isLight: boolean): maplibregl.StyleSpecification => ({
       id: 'base-map',
       type: 'raster',
       source: 'base-map',
-      paint: isLight
-        ? {}
-        : {
-            'raster-brightness-min': 0.1,
-            'raster-brightness-max': 0.5,
-            'raster-saturation': -0.8,
-          },
+      paint: {
+        'raster-brightness-min': isLight ? 0 : 0.05,
+        'raster-brightness-max': isLight ? 1 : 0.75,
+        'raster-saturation': 0,
+      },
     },
   ],
 });
