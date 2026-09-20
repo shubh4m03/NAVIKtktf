@@ -53,9 +53,9 @@ const createBaseStyle = (isLight: boolean): maplibregl.StyleSpecification => ({
 });
 
 const GLOBE_PANEL_STYLE: React.CSSProperties = {
-  backgroundColor: '#06131f',
-  border: '1px solid rgba(34, 211, 238, 0.7)',
-  color: '#ffffff',
+  backgroundColor: '#ffffff',
+  border: '1px solid rgba(15, 23, 42, 0.65)',
+  color: '#000000',
   opacity: 1,
   mixBlendMode: 'normal',
   textShadow: '0 1px 2px rgba(0, 0, 0, 0.95)',
@@ -558,24 +558,24 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
       <div style={GLOBE_PANEL_STYLE} className="globe-overlay-panel absolute top-3.5 left-3.5 z-10 pointer-events-none px-3.5 py-2.5 rounded shadow-subtle max-w-xs font-mono">
         <div className="flex items-center gap-2 mb-1">
           <div className="w-2 h-2 rounded-full bg-brand-primary" />
-          <h3 className="text-xs font-bold text-white tracking-wider uppercase">
+          <h3 className="text-xs font-bold text-black tracking-wider uppercase">
             {isGlobeProjection ? '3D MARITIME GLOBE' : 'MERCATOR CHART'}
           </h3>
         </div>
-        <p className="text-[10px] text-slate-200 mb-2">
+        <p className="text-[10px] text-black mb-2">
           Real Geographic Corridors · Hydrographic Ports &amp; Chokepoints
         </p>
 
         <div className="flex items-center gap-3 text-[11px]">
           <div>
-            <span className="text-slate-200 block text-[9px] uppercase tracking-wider">Active Sea Lane</span>
-            <span className="text-brand-primary font-semibold truncate block max-w-[170px]">
+            <span className="text-black block text-[9px] uppercase tracking-wider">Active Sea Lane</span>
+            <span className="text-black font-semibold truncate block max-w-[170px]">
               {activeRoute.originPortId.replace('port-', '')} → {activeRoute.destinationPortId.replace('port-', '')}
             </span>
           </div>
           <div className="border-l border-border-subtle pl-3">
-            <span className="text-slate-200 block text-[9px] uppercase tracking-wider">Distance</span>
-            <span className="text-white font-semibold">{activeRoute.distanceNauticalMiles.toLocaleString()} NM</span>
+            <span className="text-black block text-[9px] uppercase tracking-wider">Distance</span>
+            <span className="text-black font-semibold">{activeRoute.distanceNauticalMiles.toLocaleString()} NM</span>
           </div>
         </div>
       </div>
@@ -589,7 +589,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
           className={`px-2.5 py-1.5 rounded border flex items-center justify-between gap-2 transition-colors shadow-subtle ${
             isGlobeProjection
               ? 'bg-brand-primary text-white border-brand-primary'
-              : 'globe-overlay-control text-white'
+              : 'globe-overlay-control text-black'
           }`}
         >
           <Globe className="w-3.5 h-3.5" />
@@ -603,7 +603,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
           className={`px-2.5 py-1.5 rounded border flex items-center justify-between gap-2 transition-colors shadow-subtle ${
             isSpinning
               ? 'bg-brand-primary text-white border-brand-primary'
-              : 'globe-overlay-control text-white'
+              : 'globe-overlay-control text-black'
           }`}
         >
           <RotateCw className={`w-3.5 h-3.5 ${isSpinning ? 'animate-spin' : ''}`} style={{ animationDuration: '10s' }} />
@@ -614,7 +614,7 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
           onClick={handleResetMaritimeView}
           title="Reset to Indo-Pacific View"
           style={GLOBE_CONTROL_STYLE}
-          className="globe-overlay-control px-2.5 py-1.5 rounded text-white hover:text-white transition-colors shadow-subtle flex items-center justify-between gap-2"
+          className="globe-overlay-control px-2.5 py-1.5 rounded text-black hover:text-black transition-colors shadow-subtle flex items-center justify-between gap-2"
         >
           <Compass className="w-3.5 h-3.5" />
           <span>INDO-PACIFIC</span>
@@ -624,27 +624,27 @@ export const MaritimeGlobe: React.FC<MaritimeGlobeProps> = ({
       {/* Bottom Floating Legend & Vessel Telemetry Disclaimer */}
       <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-none flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
         {/* Maritime Legend */}
-        <div style={GLOBE_PANEL_STYLE} className="globe-overlay-panel pointer-events-auto px-3 py-1.5 rounded shadow-subtle flex items-center gap-3 text-[10px] font-mono text-white">
+        <div style={GLOBE_PANEL_STYLE} className="globe-overlay-panel pointer-events-auto px-3 py-1.5 rounded shadow-subtle flex items-center gap-3 text-[10px] font-mono text-black">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block border border-white" />
-            <span className="text-slate-200">Port</span>
+            <span className="text-black">Port</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block border border-white" />
-            <span className="text-slate-200">Chokepoint</span>
+            <span className="text-black">Chokepoint</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block border border-white" />
-            <span className="text-slate-200">Vessel Position</span>
+            <span className="text-black">Vessel Position</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="w-5 h-1 bg-brand-primary inline-block rounded" />
-            <span className="text-white font-semibold">Geodesic Route</span>
+            <span className="text-black font-semibold">Geodesic Route</span>
           </div>
         </div>
 
         {/* Demo Data Disclaimer Badge */}
-        <div style={GLOBE_PANEL_STYLE} className="globe-overlay-panel pointer-events-auto px-3 py-1.5 rounded shadow-subtle flex items-center gap-1.5 text-[10px] font-mono text-slate-200">
+        <div style={GLOBE_PANEL_STYLE} className="globe-overlay-panel pointer-events-auto px-3 py-1.5 rounded shadow-subtle flex items-center gap-1.5 text-[10px] font-mono text-black">
           <Info className="w-3.5 h-3.5 text-brand-primary flex-shrink-0" />
           <span>DEMO VESSEL POSITION · Simulated algorithmic tracking</span>
         </div>
