@@ -29,11 +29,7 @@ public class NirnayService {
 
     public Map<String, Object> analyze(String prompt, Map<String, Object> context, List<Object> history) {
         if (geminiApiKey == null || geminiApiKey.isBlank()) {
-            return Map.of(
-                    "objective", "Configuration Error",
-                    "answer", "GEMINI_API_KEY is not configured on the server. Please set it to enable NIRNAY.",
-                    "confidence", 0.0
-            );
+            return fallbackAnalysis(prompt, context);
         }
 
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + geminiApiKey;
@@ -83,4 +79,20 @@ public class NirnayService {
             throw new RuntimeException("Failed to call LLM API: " + e.getMessage(), e);
         }
     }
+
+            private Map<String, Object> fallbackAnalysis(String prompt, Map<String, Object> context) {
+            String scenario = context != null ? context.toString() : "the active voyage scenario";
+            return Map.of(
+                "objective", "Scenario Analysis",
+                "answer", "NIRNAY is using deterministic fallback guidance because no Gemini API key is configured. "
+                    + "For the query '" + prompt + "', validate the recommendation against current rates, port limits, "
+                    + "vessel availability, and weather before fixing a charter. Active context: " + scenario,
+                "rationale", List.of(
+                    "Review the active vessel, cargo, and port constraints before committing.",
+                    "Compare the recommendation with current freight, bunker, congestion, and route-risk inputs."
+                ),
+                "confidence", 0.45,
+                "sources", List.of("NAVIK deterministic fallback")
+            );
+            }
 }
